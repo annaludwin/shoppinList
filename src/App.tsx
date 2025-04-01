@@ -12,16 +12,23 @@ interface ShoppingListItemProps {
 function App() {
   // variables:
 
-  const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState("");
-  const [checkedItems, setCheckedItems] = useState({});
+  const [products, setProducts] = useState<string[]>([]);
+  const [newProduct, setNewProduct] = useState<string>("");
+  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
+    {},
+  );
+  const [hideSelected, setHideSelected] = useState<boolean>(false);
 
   const toggleChecked = (id: number) => {
-    setCheckedItems((checkedItems: []) => ({
+    setCheckedItems((checkedItems) => ({
       ...checkedItems,
       [id]: !checkedItems[id],
     }));
   };
+
+  const filteredProducts = hideSelected
+    ? products.filter((_, i) => !checkedItems[i])
+    : products;
 
   const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
     product,
@@ -45,7 +52,7 @@ function App() {
 
   // functions:
 
-  function changeInputText(e) {
+  function changeInputText(e: React.ChangeEvent<HTMLInputElement>) {
     setNewProduct(e.target.value);
   }
 
@@ -56,7 +63,9 @@ function App() {
     }
   }
 
-  function hideSelected() {}
+  function toggleHideSelectedBox() {
+    setHideSelected((hideSelected) => !hideSelected);
+  }
 
   // aplication:
 
@@ -82,12 +91,16 @@ function App() {
             className="hide"
             style={{ color: "blanchedalmond", marginTop: "1em" }}
           >
-            <input type="checkbox" value="hide" />
+            <input
+              type="checkbox"
+              value="hide"
+              onChange={toggleHideSelectedBox}
+            />
             <label>Hide selected</label>
           </div>
 
           <div className="meal-card list">
-            {products.map((product, index) => (
+            {filteredProducts.map((product, index) => (
               <ShoppingListItem
                 product={product}
                 id={index}
