@@ -1,19 +1,44 @@
 import "./reset.css";
 import "./styles.css";
 import { useState } from "react";
-import { ShoppingList } from "./components/ShoppingList";
+
+interface ShoppingListItemProps {
+  product: string;
+  id: number;
+  checked: boolean;
+  toggleChecked: (id: number) => void;
+}
 
 function App() {
   // variables:
 
-  const [products, setProducts] = useState(["chleb", "sól", "wódka"]);
+  const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState("");
+  const [checkedItems, setCheckedItems] = useState({});
 
-  const ShoppingListItem = ({ product }) => {
+  const toggleChecked = (id: number) => {
+    setCheckedItems((checkedItems: []) => ({
+      ...checkedItems,
+      [id]: !checkedItems[id],
+    }));
+  };
+
+  const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
+    product,
+    id,
+    checked,
+    toggleChecked,
+  }) => {
     return (
       <div>
-        <input type="checkbox" />
-        <em>{product}</em>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => toggleChecked(id)}
+        />
+        <em style={{ textDecoration: checked ? "line-through" : "none" }}>
+          {product}
+        </em>{" "}
       </div>
     );
   };
@@ -25,11 +50,11 @@ function App() {
   }
 
   function addProduct() {
-    setProducts([...products, newProduct]);
-    setNewProduct("");
+    if (newProduct.trim() !== "") {
+      setProducts([...products, newProduct]);
+      setNewProduct("");
+    }
   }
-
-  function crossProduct() {}
 
   function hideSelected() {}
 
@@ -65,11 +90,12 @@ function App() {
             {products.map((product, index) => (
               <ShoppingListItem
                 product={product}
-                key={index}
+                id={index}
+                checked={checkedItems[index]}
+                toggleChecked={toggleChecked}
               ></ShoppingListItem>
             ))}
           </div>
-          {console.log(newProduct)}
         </section>
       </div>
     </>
