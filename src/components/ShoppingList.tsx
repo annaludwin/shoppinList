@@ -1,15 +1,15 @@
-import mealBase from "../mealBase";
-
 // exported component:
-export const ShoppingList = ({ weekPart, openModalAndLoadData }) => {
+export const ShoppingList = () => {
   return (
     <div className="screen">
       <section className="day-panel dark">
         <h3 className="shoppingList no-margin ">Lista zakupów</h3>
-        <h4 className="shoppingList">sobota-poniedziałek</h4>
-        <button className="shop">stwórz listę zakupów</button>
-
-        {/*todo dopisac input + button*/}
+        <input
+          type="text"
+          placeholder="Dodaj produkt"
+          className="custom-input custom-input:focus"
+        />
+        <button className="shop">Dodaj produkt</button>
 
         <div
           className="hide"
