@@ -15,42 +15,37 @@ interface ShoppingListItem {
   checked: boolean;
 }
 
+const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
+  product,
+  id,
+  checked,
+  toggleChecked,
+}) => {
+  return (
+    <div>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={() => toggleChecked(id)}
+      />
+      <em style={{ textDecoration: checked ? "line-through" : "none" }}>
+        {product}
+      </em>{" "}
+    </div>
+  );
+};
+
 function App() {
   // variables:
-
   const [inputProductName, setInputProductName] = useState<string>("");
   const [hideSelected, setHideSelected] = useState<boolean>(false);
-  const [productItems, setProductItems] = useState<ShoppingListItem[]>([
-    { product: "kawa", id: 123, checked: true },
-    { product: "mleko", id: 456, checked: false },
-  ]);
+  const [productItems, setProductItems] = useState<ShoppingListItem[]>([]);
 
   const visibleItems = hideSelected
-    ? productItems.filter((productItem, index) => !productItem.checked)
+    ? productItems.filter((productItem) => !productItem.checked)
     : productItems;
 
-  const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
-    product,
-    id,
-    checked,
-    toggleChecked,
-  }) => {
-    return (
-      <div>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={() => toggleChecked(id)}
-        />
-        <em style={{ textDecoration: checked ? "line-through" : "none" }}>
-          {product}
-        </em>{" "}
-      </div>
-    );
-  };
-
   // functions:
-
   function changeInputText(e: React.ChangeEvent<HTMLInputElement>) {
     setInputProductName(e.target.value);
   }
@@ -86,8 +81,7 @@ function App() {
     setHideSelected((hideSelected) => !hideSelected);
   }
 
-  // aplication:
-
+  // application:
   return (
     <>
       <div className="screen">
@@ -119,7 +113,7 @@ function App() {
           </div>
 
           <div className="meal-card list">
-            {visibleItems.map((productItem, index) => (
+            {visibleItems.map((productItem) => (
               <ShoppingListItem
                 product={productItem.product}
                 id={productItem.id}
