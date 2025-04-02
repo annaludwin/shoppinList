@@ -15,27 +15,6 @@ interface ShoppingListItem {
   checked: boolean;
 }
 
-const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
-  product,
-  id,
-  checked,
-  toggleChecked,
-}) => {
-  return (
-    <div>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={() => toggleChecked(id)}
-      />
-      <em style={{ textDecoration: checked ? "line-through" : "none" }}>
-        {product}
-      </em>{" "}
-      <button className="button-delete">DELETE</button>
-    </div>
-  );
-};
-
 function App() {
   // variables:
   const [inputProductName, setInputProductName] = useState<string>("");
@@ -46,7 +25,36 @@ function App() {
     ? productItems.filter((productItem) => !productItem.checked)
     : productItems;
 
+  const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
+    product,
+    id,
+    checked,
+    toggleChecked,
+  }) => {
+    return (
+      <div>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => toggleChecked(id)}
+        />
+        <em style={{ textDecoration: checked ? "line-through" : "none" }}>
+          {product}
+        </em>{" "}
+        <button className="button-delete" onClick={() => deleteItem(id)}>
+          x
+        </button>
+      </div>
+    );
+  };
+
   // functions:
+  function deleteItem(id: number) {
+    setProductItems((productItems) =>
+      productItems.filter((deletedProduct) => deletedProduct.id !== id),
+    );
+  }
+
   function changeInputText(e: React.ChangeEvent<HTMLInputElement>) {
     setInputProductName(e.target.value);
   }
