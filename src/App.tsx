@@ -18,32 +18,12 @@ interface ShoppingListItem {
 function App() {
   // variables:
 
-  const [products, setProducts] = useState<string[]>([]);
-  const [newProduct, setNewProduct] = useState<string>("");
-  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
-    {},
-  );
+  const [inputProductName, setInputProductName] = useState<string>("");
   const [hideSelected, setHideSelected] = useState<boolean>(false);
-
   const [productItems, setProductItems] = useState<ShoppingListItem[]>([
     { product: "kawa", id: 123, checked: true },
     { product: "mleko", id: 456, checked: false },
   ]);
-
-  const toggleChecked = (id: number): void => {
-    setProductItems((productItems) => {
-      const newItem: ShoppingListItem[] = productItems.map(
-        (item: ShoppingListItem) => {
-          if (item.id === id) {
-            return { ...item, checked: !item.checked };
-          } else {
-            return item;
-          }
-        },
-      );
-      return newItem;
-    });
-  };
 
   const visibleItems = hideSelected
     ? productItems.filter((productItem, index) => !productItem.checked)
@@ -72,13 +52,33 @@ function App() {
   // functions:
 
   function changeInputText(e: React.ChangeEvent<HTMLInputElement>) {
-    setNewProduct(e.target.value);
+    setInputProductName(e.target.value);
+  }
+
+  function toggleChecked(id: number): void {
+    setProductItems((productItems) => {
+      const newItem: ShoppingListItem[] = productItems.map(
+        (item: ShoppingListItem) => {
+          if (item.id === id) {
+            return { ...item, checked: !item.checked };
+          } else {
+            return item;
+          }
+        },
+      );
+      return newItem;
+    });
   }
 
   function addProduct() {
-    if (newProduct.trim() !== "") {
-      setProducts([...products, newProduct]);
-      setNewProduct("");
+    if (inputProductName.trim() !== "") {
+      const newProductItem = {
+        product: inputProductName,
+        id: Date(),
+        checked: false,
+      };
+      setProductItems([...productItems, newProductItem]);
+      setInputProductName("");
     }
   }
 
@@ -98,7 +98,7 @@ function App() {
             type="text"
             placeholder="enter a new product..."
             className="custom-input custom-input:focus"
-            value={newProduct}
+            value={inputProductName}
             onChange={changeInputText}
           />
 
