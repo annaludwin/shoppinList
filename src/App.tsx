@@ -16,6 +16,30 @@ interface ShoppingListItem {
   checked: boolean;
 }
 
+const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
+  product,
+  id,
+  checked,
+  toggleChecked,
+  deleteItem,
+}) => {
+  return (
+    <div>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={() => toggleChecked(id)}
+      />
+      <em style={{ textDecoration: checked ? "line-through" : "none" }}>
+        {product}
+      </em>{" "}
+      <button className="button-delete" onClick={() => deleteItem(id)}>
+        x
+      </button>
+    </div>
+  );
+};
+
 function App() {
   // variables:
   const [inputProductName, setInputProductName] = useState<string>("");
@@ -25,30 +49,6 @@ function App() {
   const visibleItems = hideSelected
     ? productItems.filter((productItem) => !productItem.checked)
     : productItems;
-
-  const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
-    product,
-    id,
-    checked,
-    toggleChecked,
-    deleteItem,
-  }) => {
-    return (
-      <div>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={() => toggleChecked(id)}
-        />
-        <em style={{ textDecoration: checked ? "line-through" : "none" }}>
-          {product}
-        </em>{" "}
-        <button className="button-delete" onClick={() => deleteItem(id)}>
-          x
-        </button>
-      </div>
-    );
-  };
 
   // functions:
   function deleteItem(id: number) {
