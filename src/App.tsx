@@ -26,7 +26,7 @@ function App() {
   const [hideSelected, setHideSelected] = useState<boolean>(false);
 
   const [productItems, setProductItems] = useState<ShoppingListItem[]>([
-    { product: "kawa", id: 123, checked: false },
+    { product: "kawa", id: 123, checked: true },
     { product: "mleko", id: 456, checked: false },
   ]);
 
@@ -37,9 +37,9 @@ function App() {
     }));
   };
 
-  const filteredProducts = hideSelected
-    ? products.filter((_, i) => !checkedItems[i])
-    : products;
+  const visibleItems = hideSelected
+    ? productItems.filter((productItem, index) => !productItem.checked)
+    : productItems;
 
   const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
     product,
@@ -111,7 +111,7 @@ function App() {
           </div>
 
           <div className="meal-card list">
-            {productItems.map((productItem, index) => (
+            {visibleItems.map((productItem, index) => (
               <ShoppingListItem
                 product={productItem.product}
                 id={productItem.id}
