@@ -7,6 +7,7 @@ interface ShoppingListItemProps {
   id: number;
   checked: boolean;
   toggleChecked: (id: number) => void;
+  deleteItem: (id: number) => void;
 }
 
 interface ShoppingListItem {
@@ -30,6 +31,7 @@ function App() {
     id,
     checked,
     toggleChecked,
+    deleteItem,
   }) => {
     return (
       <div>
@@ -129,6 +131,7 @@ function App() {
                 id={productItem.id}
                 checked={productItem.checked}
                 toggleChecked={toggleChecked}
+                deleteItem={deleteItem}
               ></ShoppingListItem>
             ))}
           </div>
