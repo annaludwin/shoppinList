@@ -30,11 +30,19 @@ function App() {
     { product: "mleko", id: 456, checked: false },
   ]);
 
-  const toggleChecked = (id: number) => {
-    setCheckedItems((checkedItems) => ({
-      ...checkedItems,
-      [id]: !checkedItems[id],
-    }));
+  const toggleChecked = (id: number): void => {
+    setProductItems((productItems) => {
+      const newItem: ShoppingListItem[] = productItems.map(
+        (item: ShoppingListItem) => {
+          if (item.id === id) {
+            return { ...item, checked: !item.checked };
+          } else {
+            return item;
+          }
+        },
+      );
+      return newItem;
+    });
   };
 
   const visibleItems = hideSelected
