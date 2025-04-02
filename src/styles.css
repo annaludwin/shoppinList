@@ -271,6 +271,31 @@ label.cross{
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+/* Button delete */
+
+.button-delete {
+  background-color: var(--bel-orange);
+  color: white;
+  font-weight: bold;
+  font-size: 0.6em;
+  padding: 0.3em 0.7em;
+  border: none;
+  border-radius: 0.3em;
+  cursor: pointer;
+  margin-left: 1em;
+  white-space: nowrap;
+  position: relative;
+  top: -4px;
+}
+
+.button-delete:hover {
+  filter: brightness(1.2);
+}
+
+.button-delete:active {
+  filter: brightness(0.9);
+}
+
 
 
 

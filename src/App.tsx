@@ -31,6 +31,7 @@ const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
       <em style={{ textDecoration: checked ? "line-through" : "none" }}>
         {product}
       </em>{" "}
+      <button className="button-delete">DELETE</button>
     </div>
   );
 };
