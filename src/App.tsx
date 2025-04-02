@@ -9,6 +9,12 @@ interface ShoppingListItemProps {
   toggleChecked: (id: number) => void;
 }
 
+interface ShoppingListItem {
+  product: string;
+  id: number;
+  checked: boolean;
+}
+
 function App() {
   // variables:
 
@@ -18,6 +24,11 @@ function App() {
     {},
   );
   const [hideSelected, setHideSelected] = useState<boolean>(false);
+
+  const [productItems, setProductItems] = useState<ShoppingListItem[]>([
+    { product: "kawa", id: 123, checked: false },
+    { product: "mleko", id: 456, checked: false },
+  ]);
 
   const toggleChecked = (id: number) => {
     setCheckedItems((checkedItems) => ({
@@ -100,11 +111,11 @@ function App() {
           </div>
 
           <div className="meal-card list">
-            {filteredProducts.map((product, index) => (
+            {productItems.map((productItem, index) => (
               <ShoppingListItem
-                product={product}
-                id={index}
-                checked={checkedItems[index]}
+                product={productItem.product}
+                id={productItem.id}
+                checked={productItem.checked}
                 toggleChecked={toggleChecked}
               ></ShoppingListItem>
             ))}
