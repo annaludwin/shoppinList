@@ -72,7 +72,7 @@ function App() {
         id: Date(),
         checked: false,
       };
-      setProductItems([...productItems, newProductItem]);
+      setProductItems((productItems) => [...productItems, newProductItem]);
       setInputProductName("");
     }
   }
@@ -106,7 +106,7 @@ function App() {
           >
             <input
               type="checkbox"
-              value="hide"
+              checked={hideSelected}
               onChange={toggleHideSelectedBox}
             />
             <label>Hide selected</label>
@@ -115,6 +115,7 @@ function App() {
           <div className="meal-card list">
             {visibleItems.map((productItem) => (
               <ShoppingListItem
+                key={productItem.id}
                 product={productItem.product}
                 id={productItem.id}
                 checked={productItem.checked}
