@@ -2,6 +2,12 @@ import "./reset.css";
 import "./styles.css";
 import { useState } from "react";
 
+/*
+przesuwanie na liscie góra-dół
+edycja wpisu - zmianiam element listy li=> input
+dodawanie z jednostkami
+*/
+
 interface ShoppingListItemProps {
   product: string;
   id: number;
@@ -24,15 +30,17 @@ const ShoppingListItem: React.FC<ShoppingListItemProps> = ({
   deleteItem,
 }) => {
   return (
-    <div>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={() => toggleChecked(id)}
-      />
-      <em style={{ textDecoration: checked ? "line-through" : "none" }}>
-        {product}
-      </em>{" "}
+    <div className="shopping-list-item">
+      <div>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => toggleChecked(id)}
+        />
+        <em style={{ textDecoration: checked ? "line-through" : "none" }}>
+          {product}
+        </em>{" "}
+      </div>
       <button className="button-delete" onClick={() => deleteItem(id)}>
         x
       </button>
@@ -80,7 +88,7 @@ function App() {
     if (inputProductName.trim() !== "") {
       const newProductItem = {
         product: inputProductName,
-        id: Date(),
+        id: Date.now(),
         checked: false,
       };
       setProductItems((productItems) => [...productItems, newProductItem]);
@@ -107,7 +115,7 @@ function App() {
             onChange={changeInputText}
           />
 
-          <button className="shop" onClick={addProduct}>
+          <button className="button-delete big-button" onClick={addProduct}>
             +
           </button>
 
